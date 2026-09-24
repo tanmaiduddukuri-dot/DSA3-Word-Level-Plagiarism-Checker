@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlagiarismGuard — Word-Level Plagiarism Checker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo">PG</span><div><strong>PlagiarismGuard</strong><small>Word-Level Similarity Analyzer</small></div></div>
+    <button id="themeBtn" class="icon-btn" title="Toggle theme">☾</button>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <span class="eyebrow">DSA-3 PROJECT</span>
+        <h1>Check your document for plagiarism.</h1>
+        <p>Detect exact copying and paraphrased/reordered overlap using a two-stage Rabin–Karp + LCS analysis.</p>
+      </div>
+      <div class="algo-pills"><span>Rabin–Karp</span><span>LCS / DP</span><span>No external libraries</span></div>
+    </section>
+
+    <section class="grid">
+      <article class="panel submission">
+        <div class="panel-head"><div><h2>Submission</h2><p>Document being checked</p></div><label class="upload">Upload .txt<input id="submissionFile" type="file" accept=".txt,text/plain"></label></div>
+        <textarea id="submission" placeholder="Paste the document you want to check..."></textarea>
+        <div class="stats"><span id="submissionWords">0 words</span><span id="submissionChars">0 characters</span></div>
+      </article>
+
+      <article class="panel references">
+        <div class="panel-head"><div><h2>Reference sources</h2><p>Add one or more source documents</p></div><label class="upload">Add .txt<input id="referenceFiles" type="file" accept=".txt,text/plain" multiple></label></div>
+        <div id="referencesList" class="references-list"></div>
+        <div class="paste-ref">
+          <input id="refName" placeholder="Source name">
+          <textarea id="refText" placeholder="Or paste a reference document here..."></textarea>
+          <button id="addRef" class="secondary">+ Add reference</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="controls panel">
+      <div class="control"><label>k-gram size <b id="kValue">5</b></label><input id="k" type="range" min="2" max="10" value="5"></div>
+      <div class="control"><label>Minimum paraphrase span <b id="spanValue">3</b></label><input id="minSpan" type="range" min="2" max="8" value="3"></div>
+      <label class="check"><input id="stopwords" type="checkbox"> Remove common stop words</label>
+      <button id="checkBtn" class="primary">Analyze plagiarism <span>→</span></button>
+    </section>
+
+    <section id="results" class="results hidden">
+      <div class="score-card panel">
+        <div class="score-ring"><span id="score">0%</span><small>similarity</small></div>
+        <div class="score-copy"><span id="risk" class="badge">LOW</span><h2 id="resultTitle">Analysis complete</h2><p id="resultSummary"></p></div>
+        <div class="metric"><strong id="exactCount">0</strong><span>exact tokens</span></div>
+        <div class="metric"><strong id="paraCount">0</strong><span>paraphrase tokens</span></div>
+        <div class="metric"><strong id="matchedCount">0</strong><span>matched tokens</span></div>
+      </div>
+
+      <div class="result-grid">
+        <article class="panel">
+          <div class="panel-head"><div><h2>Source breakdown</h2><p>Contribution by reference document</p></div></div>
+          <div id="sourceBreakdown"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-head"><div><h2>Matched spans</h2><p>Detected evidence</p></div></div>
+          <div id="matches"></div>
+        </article>
+      </div>
+
+      <article class="panel report">
+        <div class="panel-head"><div><h2>Highlighted submission</h2><p>Exact matches take priority over paraphrase matches.</p></div><button id="clearHighlights" class="secondary">Clear</button></div>
+        <div id="highlighted" class="document"></div>
+        <div class="legend"><span><i class="exact"></i> Exact / verbatim</span><span><i class="para"></i> Paraphrase / reordered</span></div>
+      </article>
+    </section>
+  </main>
+  <footer>PlagiarismGuard • Frontend prototype • Built around the project specification</footer>
+  <script src="app.js"></script>
+</body>
+</html>
